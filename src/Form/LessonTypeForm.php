@@ -7,6 +7,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,18 +16,16 @@ class LessonTypeForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('starttime')
-            ->add('endtime')
             ->add('lessongoal')
             ->add('comment')
             ->add('student', EntityType::class, [
                 'class' => User::class,
-                'choice_label' => 'id',
-                'multiple' => true,
+                'choice_label' => 'name',
+                'multiple' => false,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->where('u.roles LIKE :role')
-                        ->setParameter('role', '%ROLE_STUDENT');
+                        ->setParameter('role', '%ROLE_STUDENT%');
                 },
             ])
             ->add('instructor', EntityType::class, [
@@ -39,6 +38,7 @@ class LessonTypeForm extends AbstractType
                         ->setParameter('role', '%ROLE_INSTRUCTOR%');
                 },
             ])
+            ->add('submit', SubmitType::class, ['label' => 'Aanmaken'])
         ;
     }
 

@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\LessonRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: LessonRepository::class)]
 class Lesson
@@ -14,12 +14,6 @@ class Lesson
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column]
-    private ?\DateTime $starttime = null;
-
-    #[ORM\Column]
-    private ?\DateTime $endtime = null;
 
     #[ORM\Column(length: 255)]
     private ?string $lessongoal = null;
@@ -38,30 +32,6 @@ class Lesson
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getStarttime(): ?\DateTime
-    {
-        return $this->starttime;
-    }
-
-    public function setStarttime(\DateTime $starttime): static
-    {
-        $this->starttime = $starttime;
-
-        return $this;
-    }
-
-    public function getEndtime(): ?\DateTime
-    {
-        return $this->endtime;
-    }
-
-    public function setEndtime(\DateTime $endtime): static
-    {
-        $this->endtime = $endtime;
-
-        return $this;
     }
 
     public function getLessongoal(): ?string
@@ -111,5 +81,4 @@ class Lesson
 
         return $this;
     }
-
 }

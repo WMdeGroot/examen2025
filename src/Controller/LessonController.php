@@ -24,12 +24,43 @@ final class LessonController extends AbstractController
             $entityManager->persist($lessondata);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Het boek is toegevoegd');
+            $this->addFlash('success', 'les is ingeplant');
 
-            return $this->redirectToRoute('app_book');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('lesson/index.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/lesson/read', name: 'app_lesson_read')]
+    public function readPage(EntityManagerInterface $entityManager): Response
+    {
+        $lesson = $entityManager->getRepository(Lesson::class)->findAll();
+
+        return $this->render('lesson/read.html.twig', [
+            'lesson' => $lesson
+        ]);
+    }
+
+    #[Route('/lesson/update{id}', name: 'app_lesson_update')]
+    public function updatePage(Request $request, EntityManagerInterface $entityManager, Lesson $lesson): Response
+    {
+        $form = $this->createForm(LessonTypeForm::class, $lesson);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $lesson = $form->getData();
+            $entityManager->persist($lesson);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'les is ingeplant');
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('lesson/update.html.twig', [
             'form' => $form,
         ]);
     }

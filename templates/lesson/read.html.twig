@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LessonController!{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h2>A basic HTML table</h2>
+
+<table class="table">
+  <tr>
+    <th>id</th>
+    <th>starttime</th>
+    <th>endtime</th>
+    <th>lessongoal</th>
+    <th>comment</th>
+    <th>student</th>
+    <th>instructor</th>
+    <th>update</th>
+  </tr>
+  {% for lesson in lesson %}
+  <tr>
+    <td>{{ lesson.id }}</td>
+{#    <td>{{lesson.starttime|date('Y-m-d') }}</td>#}
+{#    <td>{{lesson.endtime|date('Y-m-d') }}</td>#}
+    <td>{{ lesson.lessongoal }}</td>
+    <td>{{ lesson.comment }}</td>
+    <td>{{ lesson.student.name }}</td>
+    <td>{{ lesson.instructor.name }}</td>
+    <td><a class="btn btn-warning" href="{{ path("app_lesson_update", {'id' : lesson.id }) }}">Update</a></td>
+  </tr>
+  {% endfor %}
+</table>
+    <a class="btn btn-primary" href="{{ path('app_lesson') }}">Les toevoegen</a>
+  </div>
+
+
+{% endblock %}
