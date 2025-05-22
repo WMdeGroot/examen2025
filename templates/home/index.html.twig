@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <div class="container-fluid text-bg-light">
+        <div class="row text-center p-5">
+            <h1>Rijschool vierkante wielen</h1>
+        </div>
+
+        <div class="row text-center p-5">
+            <div class="col-md-6">
+                <h2>Wie zijn wij?</h2>
+                <a>Wij zijn een rijschool die zich bezighouden met
+                het opleiden van leerlingen die een fysieke beperking hebben.
+                    Wij zijn een nieuwe rijschool met de beste rijinstructeurs.
+                    Ben jij nou geinetereseerd om bij ons te lessen, schrijf je dan in!
+                </a>
+            </div>
+            <div class="col-md-6">
+                <img style="width: 200px" class="img" src="{{ asset('img/rijschool.png') }}">
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid p-5" style="background-color: #e7e7e8">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Start met lessen!</h5>
+                        {% if is_granted('ROLE_STUDENT') %}
+                            <a>Welkom {{ app.user.name }}! Je rijinstructeur zal lessen voor je inplannen!</a>
+                        {% elseif is_granted('ROLE_INSTRUCTOR')%}
+                            <a>Je kan nu lessen inplannen via de lessen pagina</a>
+                        {% else %}
+                            <p class="card-text">De eerste proefles is gratis</p>
+                            <a class="btn btn-primary">Maak je account aan!</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
